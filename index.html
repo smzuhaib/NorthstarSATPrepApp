@@ -1,0 +1,2414 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NORTHSTAR — SAT & ACT Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<script src="https://js.puter.com/v2/"></script>
+<style>
+:root {
+  --bg: #070913;
+  --bg-radial: radial-gradient(circle at 85% -10%, #3e1f7a40 0%, transparent 45%),
+               radial-gradient(circle at 10% 20%, #15386040 0%, transparent 40%),
+               radial-gradient(circle at 50% 100%, #1f123d33 0%, transparent 50%),
+               #070913;
+  --surface: rgba(18, 24, 43, 0.75);
+  --surface-solid: #12192c;
+  --surface-hover: rgba(26, 36, 64, 0.88);
+  --border: rgba(255, 255, 255, 0.08);
+  --text: #f8faff;
+  --muted: #94a3b8;
+  --blue: #4f7fff;
+  --purple: #9d6fff;
+  --cyan: #38ef7d;
+  --teal: #00f2fe;
+  --pink: #ff5b99;
+  --amber: #ffb84d;
+  --red: #ff5370;
+  --glow-blue: rgba(79, 127, 255, 0.25);
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 26px;
+  --shadow-card: 0 16px 40px -10px rgba(0, 0, 0, 0.45);
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg-radial);
+  background-attachment: fixed;
+  color: var(--text);
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  font-size: 14.5px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+button, input, select, textarea { font-family: inherit; }
+button { cursor: pointer; border: none; outline: none; }
+button:disabled { opacity: 0.45; cursor: not-allowed; transform: none !important; }
+
+::-webkit-scrollbar { width: 7px; height: 7px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 20px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.22); }
+
+.app {
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr);
+  min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 24px 16px;
+  background: rgba(10, 14, 26, 0.75);
+  border-right: 1px solid var(--border);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  z-index: 40;
+}
+
+/* Authentic Northstar Logo */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 4px 6px 18px;
+  border-bottom: 1px solid var(--border);
+}
+.brand-icon-wrap {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: #ffffff;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.2);
+  flex-shrink: 0;
+}
+.brand-icon-wrap svg {
+  width: 32px;
+  height: 32px;
+  display: block;
+}
+.brand-title {
+  font-size: 18px;
+  font-weight: 900;
+  letter-spacing: 2.2px;
+  color: #ffffff;
+  text-transform: uppercase;
+  line-height: 1.1;
+}
+.brand-subtitle {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+.navlabel {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #64748b;
+  padding: 0 10px;
+  text-transform: uppercase;
+}
+
+.nav { display: grid; gap: 4px; }
+.nav button {
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: #94a3b8;
+  padding: 10px 14px;
+  text-align: left;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid transparent;
+}
+.nav button:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.05);
+}
+.nav button.active {
+  color: #fff;
+  background: linear-gradient(90deg, rgba(79, 127, 255, 0.18), rgba(157, 111, 255, 0.09));
+  border-color: rgba(117, 150, 255, 0.3);
+  box-shadow: inset 3px 0 0 var(--blue);
+}
+.ni {
+  width: 20px;
+  text-align: center;
+  font-size: 17px;
+  display: inline-block;
+}
+
+.sidebottom {
+  margin-top: auto;
+  border: 1px solid var(--border);
+  background: linear-gradient(145deg, rgba(30, 41, 74, 0.6), rgba(16, 23, 42, 0.7));
+  border-radius: var(--radius-lg);
+  padding: 18px;
+  backdrop-filter: blur(10px);
+}
+.sidebottom h3 { margin: 8px 0 4px; font-size: 15px; font-weight: 700; }
+.sidebottom p { font-size: 12px; color: var(--muted); margin: 0 0 14px; }
+
+/* Main Content */
+.main {
+  min-width: 0;
+  padding: 24px clamp(16px, 3.5vw, 42px) 60px;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 26px;
+}
+.crumb {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+}
+.crumb span { color: #fff; }
+.greeting {
+  font-size: 13px;
+  color: #cbd5e1;
+  margin-top: 2px;
+}
+
+.topactions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.select, .input, .textarea {
+  background: rgba(14, 20, 36, 0.85);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  transition: all 0.2s ease;
+}
+.select:focus, .input:focus, .textarea:focus {
+  border-color: var(--blue);
+  outline: none;
+  box-shadow: 0 0 0 3px var(--glow-blue);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 10px 16px;
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.06);
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(8px);
+  text-decoration: none;
+}
+.btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  transform: translateY(-1.5px);
+  border-color: rgba(255, 255, 255, 0.18);
+}
+.btn.primary {
+  background: linear-gradient(135deg, #4f7fff, #845ef7);
+  border: none;
+  color: #fff;
+  box-shadow: 0 8px 24px -4px var(--glow-blue);
+}
+.btn.primary:hover {
+  box-shadow: 0 12px 30px -2px rgba(79, 127, 255, 0.5);
+  filter: brightness(1.08);
+}
+.btn.danger {
+  background: rgba(255, 83, 112, 0.15);
+  border-color: rgba(255, 83, 112, 0.35);
+  color: #ffa1b2;
+}
+.btn.danger:hover { background: rgba(255, 83, 112, 0.28); }
+.btn.small {
+  font-size: 12.5px;
+  padding: 6px 12px;
+  border-radius: 10px;
+}
+
+/* Cards */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 22px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: var(--shadow-card);
+  transition: border-color 0.2s ease;
+}
+.card:hover { border-color: rgba(255, 255, 255, 0.14); }
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(26px, 4vw, 44px);
+  border-radius: var(--radius-xl);
+  border: 1px solid rgba(117, 150, 255, 0.3);
+  background: linear-gradient(135deg, #182a5c 0%, #301f57 55%, #133a4c 100%);
+  margin-bottom: 26px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+.herorow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  position: relative;
+  z-index: 2;
+}
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #a5b4fc;
+  text-transform: uppercase;
+}
+.hero h1 {
+  font-size: clamp(28px, 3.8vw, 42px);
+  font-weight: 800;
+  letter-spacing: -1.2px;
+  line-height: 1.15;
+  margin: 12px 0;
+  background: linear-gradient(120deg, #fff 60%, #cbd5e1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.hero p {
+  color: #cbd5e1;
+  max-width: 580px;
+  font-size: 15px;
+  margin: 0;
+}
+.actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 22px; }
+
+.hero-watermark {
+  width: 140px;
+  height: 140px;
+  opacity: 0.9;
+  filter: drop-shadow(0 15px 35px rgba(0,0,0,0.5));
+}
+.hero-watermark svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Stats */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 15px;
+  margin: 22px 0;
+}
+.stat {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 18px;
+  backdrop-filter: blur(12px);
+}
+.stathead {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--muted);
+  letter-spacing: 1px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.stat strong {
+  display: block;
+  font-size: 30px;
+  font-weight: 800;
+  letter-spacing: -1px;
+  margin: 6px 0 2px;
+  color: #fff;
+  font-family: 'JetBrains Mono', monospace;
+}
+.stat small { font-size: 11.5px; color: var(--muted); }
+
+.sectionhead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin: 32px 0 16px;
+}
+.sectionhead h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+.sectionhead p {
+  margin: 3px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.grid2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.grid3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  border: 1px solid rgba(117, 150, 255, 0.35);
+  background: rgba(117, 150, 255, 0.12);
+  color: #c7d2fe;
+  padding: 4px 10px;
+  border-radius: 30px;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+.pill.green { color: var(--cyan); background: rgba(56, 239, 125, 0.12); border-color: rgba(56, 239, 125, 0.3); }
+.pill.pink { color: var(--pink); background: rgba(255, 91, 153, 0.12); border-color: rgba(255, 91, 153, 0.3); }
+.pill.amber { color: var(--amber); background: rgba(255, 184, 77, 0.12); border-color: rgba(255, 184, 77, 0.3); }
+.pill.red { color: var(--red); background: rgba(255, 83, 112, 0.12); border-color: rgba(255, 83, 112, 0.3); }
+
+.progress {
+  height: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 30px;
+  overflow: hidden;
+  margin: 12px 0;
+}
+.progress span {
+  display: block;
+  height: 100%;
+  border-radius: 30px;
+  background: linear-gradient(90deg, var(--blue), var(--purple));
+  width: 0%;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.page { display: none; }
+.page.active { display: block; animation: fadeIn 0.22s ease forwards; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Practice & Test Interface */
+.toolbar {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+.toolbar > * { flex: 1; min-width: 140px; }
+.qgrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 260px;
+  gap: 18px;
+}
+.qbox { padding: clamp(20px, 3.5vw, 32px); }
+.qmeta { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 16px; }
+.qtext {
+  font-size: 18.5px;
+  font-weight: 600;
+  line-height: 1.6;
+  margin: 14px 0 24px;
+}
+.choices { display: grid; gap: 10px; }
+.choice {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-align: left;
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  transition: all 0.2s ease;
+}
+.choice:hover:not(:disabled) {
+  border-color: var(--blue);
+  background: rgba(79, 127, 255, 0.1);
+  transform: translateX(3px);
+}
+.letter {
+  display: grid;
+  place-items: center;
+  min-width: 30px;
+  height: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 9px;
+  font-weight: 800;
+  font-size: 13px;
+  font-family: 'JetBrains Mono', monospace;
+  background: rgba(0, 0, 0, 0.2);
+}
+.choice.correct {
+  border-color: rgba(56, 239, 125, 0.8);
+  background: rgba(56, 239, 125, 0.15);
+}
+.choice.wrong {
+  border-color: rgba(255, 83, 112, 0.8);
+  background: rgba(255, 83, 112, 0.15);
+}
+
+.explain {
+  padding: 18px;
+  border: 1px solid rgba(56, 239, 125, 0.35);
+  background: rgba(20, 48, 38, 0.6);
+  border-radius: var(--radius-md);
+  margin-top: 20px;
+}
+.explain h4 {
+  color: var(--cyan);
+  margin: 0 0 6px;
+  font-size: 15px;
+}
+.explain p { color: #d1fae5; font-size: 13.5px; margin: 0; }
+.qfooter {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 24px;
+}
+.qmap {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 7px;
+}
+.qnum {
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: rgba(255, 255, 255, 0.05);
+  color: #cbd5e1;
+  padding: 8px 0;
+  font-weight: 700;
+  font-size: 12px;
+  transition: all 0.15s ease;
+}
+.qnum:hover { background: rgba(255,255,255,0.12); }
+.qnum.current {
+  background: var(--blue);
+  border-color: #9cb9ff;
+  color: #fff;
+  box-shadow: 0 0 12px var(--glow-blue);
+}
+.qnum.done {
+  border-color: rgba(56, 239, 125, 0.4);
+  color: var(--cyan);
+  background: rgba(56, 239, 125, 0.08);
+}
+
+.timer {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 26px;
+  font-weight: 800;
+}
+.timer.warning { color: var(--red); animation: pulse 1s infinite alternate; }
+@keyframes pulse { from { opacity: 0.6; } to { opacity: 1; } }
+
+/* YouTube Studio Cards */
+.yt-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  background: rgba(18, 24, 43, 0.85);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+}
+.yt-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.6);
+}
+.yt-thumb-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16/9;
+  background: #000;
+  overflow: hidden;
+  cursor: pointer;
+}
+.yt-thumb-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+.yt-card:hover .yt-thumb-wrap img { transform: scale(1.05); }
+.yt-play-badge {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: rgba(255, 0, 0, 0.9);
+  display: grid;
+  place-items: center;
+  font-size: 20px;
+  color: white;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+  transition: transform 0.2s ease;
+}
+.yt-card:hover .yt-play-badge { transform: translate(-50%, -50%) scale(1.15); }
+.yt-info {
+  padding: 16px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.yt-info h3 {
+  margin: 6px 0 8px;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+.yt-channel { font-size: 12px; color: var(--muted); margin-bottom: 10px; }
+
+/* Video Modal */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(4, 7, 16, 0.88);
+  backdrop-filter: blur(12px);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+.modal-content {
+  width: 100%;
+  max-width: 920px;
+  background: #0f1629;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.85);
+}
+.modal-header {
+  padding: 16px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.02);
+}
+.video-player-container {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%;
+  height: 0;
+  background: #000;
+}
+.video-player-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* Chat Interface */
+.chatcard {
+  display: flex;
+  flex-direction: column;
+  min-height: 580px;
+}
+.messages {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  overflow-y: auto;
+  max-height: 520px;
+  min-height: 320px;
+  padding: 10px 4px 18px;
+}
+.bubble {
+  max-width: 90%;
+  border-radius: 16px;
+  padding: 14px 18px;
+  font-size: 14.5px;
+  line-height: 1.6;
+}
+.bubble.user {
+  align-self: flex-end;
+  background: linear-gradient(135deg, #3753a8, #4c3ba6);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #fff;
+}
+.bubble.assistant {
+  align-self: flex-start;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border);
+  color: #f1f5f9;
+}
+.chatinput { display: flex; gap: 10px; margin-top: 14px; }
+.chatinput textarea { flex: 1; resize: vertical; min-height: 48px; max-height: 140px; }
+
+/* Table */
+.tablewrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+td, th { padding: 12px 14px; border-bottom: 1px solid var(--border); text-align: left; }
+th { color: var(--muted); font-weight: 600; font-size: 12px; letter-spacing: 0.5px; }
+
+.toast {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  background: #15223e;
+  border: 1px solid #4f7fff;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  border-radius: var(--radius-md);
+  padding: 12px 20px;
+  font-weight: 600;
+  z-index: 110;
+  animation: slideUp 0.25s ease;
+}
+@keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+.hide { display: none !important; }
+.mobilemenu { display: none; }
+
+@media (max-width: 1024px) {
+  .app { grid-template-columns: 220px minmax(0, 1fr); }
+  .stats { grid-template-columns: repeat(2, 1fr); }
+  .qgrid, .grid2, .grid3 { grid-template-columns: 1fr; }
+}
+@media (max-width: 768px) {
+  .app { display: block; }
+  .sidebar {
+    position: fixed;
+    left: -280px;
+    width: 260px;
+    transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .sidebar.open { left: 0; }
+  .mobilemenu { display: inline-flex; }
+  .main { padding: 16px; }
+  .herorow { display: block; }
+  .hero-watermark { display: none; }
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <!-- Sidebar Navigation with Authentic Star Logo -->
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="brand-icon-wrap" title="Northstar Icon">
+        <svg viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="120,20 146,88 220,88 160,132 182,202 120,160 58,202 80,132 20,88 94,88" fill="#000000" />
+          <polygon points="120,18 160,192 120,154 80,192" fill="#000000" />
+          <polygon points="120,78 139,144 101,144" fill="#ffffff" />
+          <polygon points="120,126 120,160 142,180 134,144" fill="#ffffff" />
+        </svg>
+      </div>
+      <div>
+        <div class="brand-title">NORTHSTAR</div>
+        <div class="brand-subtitle">STUDIO · PREP</div>
+      </div>
+    </div>
+    
+    <div class="navlabel">Study Space</div>
+    <nav class="nav">
+      <button class="active" data-page="dashboard"><span class="ni">⌂</span>Dashboard</button>
+      <button data-page="practice"><span class="ni">◈</span>Practice</button>
+      <button data-page="videos"><span class="ni">▶</span>YouTube Studio</button>
+      <button data-page="tests"><span class="ni">◷</span>Full mock tests</button>
+      <button data-page="mistakes"><span class="ni">↻</span>Mistake notebook</button>
+      <button data-page="analytics"><span class="ni">▥</span>Analytics</button>
+      <button data-page="planner"><span class="ni">▦</span>Study planner</button>
+    </nav>
+    
+    <div class="navlabel">AI Companion</div>
+    <nav class="nav">
+      <button data-page="parth"><span class="ni">✧</span>Parth AI <span class="pill">Tutor</span></button>
+      <button data-page="settings"><span class="ni">⚙</span>Settings</button>
+    </nav>
+    
+    <div class="sidebottom">
+      <span class="pill green">TARGETED PREP</span>
+      <h3>Structured Mastery</h3>
+      <p>Target concepts directly with problem sets and live YouTube lessons.</p>
+      <button class="btn primary" style="width:100%" onclick="startPractice()">Start Practice →</button>
+    </div>
+  </aside>
+
+  <!-- Main Content Body -->
+  <main class="main">
+    <header class="topbar">
+      <div style="display:flex;align-items:center;gap:12px">
+        <button class="btn mobilemenu" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
+        <div>
+          <div class="crumb">Northstar / <span id="breadcrumb">Dashboard</span></div>
+          <div class="greeting" id="greeting">Your progress starts with your first question.</div>
+        </div>
+      </div>
+      <div class="topactions">
+        <select class="select" id="examSelect" onchange="changeExam(this.value)">
+          <option value="SAT">Digital SAT Prep</option>
+          <option value="ACT">Enhanced ACT Prep</option>
+        </select>
+        <button class="btn primary small" onclick="navigate('videos')">▶ Video Lessons</button>
+        <button class="btn small" onclick="navigate('parth')">✧ Ask Parth</button>
+      </div>
+    </header>
+
+    <!-- Page: Dashboard -->
+    <section class="page active" id="page-dashboard">
+      <div class="hero">
+        <div class="herorow">
+          <div>
+            <div class="eyebrow"><span>✦</span> Precision Learning System</div>
+            <h1>Study with purpose.<br>Test with confidence.</h1>
+            <p>Adaptive diagnostic drills, timed sectional simulations, and topic-specific YouTube masterclasses for complete mastery.</p>
+            <div class="actions">
+              <button class="btn primary" onclick="startPractice()">Start Practicing →</button>
+              <button class="btn" onclick="navigate('videos')">Explore Video Studio</button>
+            </div>
+          </div>
+          <div class="hero-watermark">
+            <svg viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <polygon points="120,20 146,88 220,88 160,132 182,202 120,160 58,202 80,132 20,88 94,88" fill="#ffffff" opacity="0.95" />
+              <polygon points="120,18 160,192 120,154 80,192" fill="#ffffff" opacity="0.95" />
+              <polygon points="120,78 139,144 101,144" fill="#182a5c" />
+              <polygon points="120,126 120,160 142,180 134,144" fill="#182a5c" />
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="stathead">QUESTIONS ANSWERED <span>◈</span></div>
+          <strong id="statAnswered">0</strong>
+          <small>Solved in this browser</small>
+        </div>
+        <div class="stat">
+          <div class="stathead">ACCURACY <span>◎</span></div>
+          <strong id="statAccuracy">—</strong>
+          <small>Across all attempts</small>
+        </div>
+        <div class="stat">
+          <div class="stathead">STUDY STREAK <span>🔥</span></div>
+          <strong id="statStreak">0 days</strong>
+          <small>Active consecutive days</small>
+        </div>
+        <div class="stat">
+          <div class="stathead">MOCK TESTS <span>✦</span></div>
+          <strong id="statTests">0</strong>
+          <small>Completed timed tests</small>
+        </div>
+      </div>
+
+      <div class="sectionhead">
+        <div>
+          <h2>Choose your subject pathway</h2>
+          <p>Practice focused topics and watch paired YouTube video masterclasses.</p>
+        </div>
+        <button class="btn small" onclick="navigate('practice')">All Practice →</button>
+      </div>
+
+      <div class="grid3">
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+            <span class="pill">QUANTITATIVE</span>
+            <span style="font-size:26px">📐</span>
+          </div>
+          <h3 style="margin:0 0 6px">Math & Problem Solving</h3>
+          <p style="color:var(--muted);font-size:13px;margin:0 0 16px">Linear equations, systems, quadratics, functions & Desmos tips.</p>
+          <div style="display:flex;gap:8px">
+            <button class="btn small primary" onclick="startPractice('Math')">Practice Math</button>
+            <button class="btn small" onclick="openSubjectVideos('Math')">▶ Lectures</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+            <span class="pill pink">VERBAL</span>
+            <span style="font-size:26px">✍️</span>
+          </div>
+          <h3 style="margin:0 0 6px">Reading & Writing</h3>
+          <p style="color:var(--muted);font-size:13px;margin:0 0 16px">Command of evidence, transitions, sentence structure & grammar.</p>
+          <div style="display:flex;gap:8px">
+            <button class="btn small primary" onclick="startPractice('Reading')">Practice Verbal</button>
+            <button class="btn small" onclick="openSubjectVideos('Reading')">▶ Lectures</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+            <span class="pill green">DATA & REASONING</span>
+            <span style="font-size:26px">📊</span>
+          </div>
+          <h3 style="margin:0 0 6px">Data & Science Reasoning</h3>
+          <p style="color:var(--muted);font-size:13px;margin:0 0 16px">Data interpretations, statistical averages, tables & experimental designs.</p>
+          <div style="display:flex;gap:8px">
+            <button class="btn small primary" onclick="startPractice('Data')">Practice Data</button>
+            <button class="btn small" onclick="openSubjectVideos('Data')">▶ Lectures</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="sectionhead">
+        <div>
+          <h2>Recent Activity</h2>
+          <p>Your logged questions and performance history.</p>
+        </div>
+        <button class="btn small" onclick="navigate('analytics')">View Analytics</button>
+      </div>
+      <div class="card" id="recentActivity"></div>
+    </section>
+
+    <!-- Page: YouTube Video Studio -->
+    <section class="page" id="page-videos">
+      <div class="sectionhead">
+        <div>
+          <h2>YouTube Lecture Studio</h2>
+          <p>Curated high-yield video lectures with direct player and full link fallback.</p>
+        </div>
+        <span class="pill green">VERIFIED VIDEO EMBEDS</span>
+      </div>
+
+      <div class="toolbar">
+        <select class="select" id="videoSubjectFilter" onchange="renderVideos()">
+          <option value="All">All Subjects</option>
+          <option value="Math">Math (Algebra, Desmos, Functions)</option>
+          <option value="Reading">Reading & Grammar Conventions</option>
+          <option value="Data">Data & Science Reasoning</option>
+        </select>
+        <input class="input" id="videoSearchInput" placeholder="Search by topic (e.g. Desmos, Transitions, Quadratics, Grammar)..." oninput="renderVideos()">
+      </div>
+
+      <div class="grid3" id="videoGrid"></div>
+    </section>
+
+    <!-- Page: Practice Studio -->
+    <section class="page" id="page-practice">
+      <div class="sectionhead">
+        <div>
+          <h2>Practice Studio</h2>
+          <p>Fresh original questions, instant explanations, and direct video links.</p>
+        </div>
+        <span class="pill">ADAPTIVE ENGINE</span>
+      </div>
+      <div class="toolbar">
+        <select class="select" id="subjectFilter">
+          <option value="All">All Subjects</option>
+          <option>Math</option>
+          <option>Reading</option>
+          <option>Data</option>
+        </select>
+        <select class="select" id="difficultyFilter">
+          <option value="All">All Difficulties</option>
+          <option>Easy</option>
+          <option>Medium</option>
+          <option>Hard</option>
+        </select>
+        <button class="btn primary" onclick="startPractice()">New 10-Question Set</button>
+      </div>
+      <div class="qgrid">
+        <div class="card qbox" id="questionPanel"></div>
+        <div style="display:grid;gap:14px;align-content:start">
+          <div class="card">
+            <h3 style="margin:0 0 10px;font-size:15px">Session Progress</h3>
+            <div class="progress"><span id="sessionProgress"></span></div>
+            <p class="smalltext" id="sessionCounter" style="color:var(--muted)">No active session</p>
+            <div class="qmap" id="questionMap"></div>
+            <button class="btn" style="width:100%;margin-top:14px" onclick="finishPractice()">Finish Session</button>
+          </div>
+          <div class="card" id="practiceVideoHelper">
+            <h3 style="margin:0 0 6px;font-size:15px">Topic Video Lecture</h3>
+            <p style="color:var(--muted);font-size:12.5px;margin:0 0 12px">Need a step-by-step video for this concept?</p>
+            <button class="btn small primary" id="topicLectureBtn" onclick="watchTopicVideo()">▶ Find Topic Video</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Page: Mock Tests -->
+    <section class="page" id="page-tests">
+      <div class="sectionhead">
+        <div>
+          <h2>Mock Test Centre</h2>
+          <p>Full-length and mini timed mock exams matching standard layouts.</p>
+        </div>
+        <span class="pill amber">UNOFFICIAL ESTIMATES</span>
+      </div>
+
+      <div class="grid2">
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+            <span class="pill">DIGITAL SAT</span>
+            <span style="font-size:28px">🎓</span>
+          </div>
+          <h3 style="margin:0 0 8px">Full Digital SAT Simulation</h3>
+          <p style="color:var(--muted);font-size:13px">Reading & Writing: 54 questions (64 min) · Math: 44 questions (70 min). Adaptive Module 2 simulation.</p>
+          <button class="btn primary" style="margin-top:12px" onclick="startFullTest('SAT')">Start Full SAT Simulation →</button>
+        </div>
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+            <span class="pill pink">ENHANCED ACT</span>
+            <span style="font-size:28px">🎯</span>
+          </div>
+          <h3 style="margin:0 0 8px">Full Enhanced ACT Simulation</h3>
+          <p style="color:var(--muted);font-size:13px">English: 50 q (35 min) · Math: 45 q (50 min) · Reading: 36 q (40 min) · Science: 40 q (40 min).</p>
+          <button class="btn primary" style="margin-top:12px" onclick="startFullTest('ACT')">Start Full ACT Simulation →</button>
+        </div>
+      </div>
+
+      <div class="sectionhead">
+        <div>
+          <h2>Focused Mini Tests</h2>
+          <p>Short 20-question review sets under timed conditions.</p>
+        </div>
+      </div>
+      <div class="grid3">
+        <div class="card">
+          <h3 style="margin:0 0 6px">SAT Mini Sprint</h3>
+          <p style="color:var(--muted);font-size:13px">20 mixed questions · 25 minutes</p>
+          <button class="btn" onclick="startMiniTest('SAT', 20, 25)">Start Mini Test</button>
+        </div>
+        <div class="card">
+          <h3 style="margin:0 0 6px">ACT Mini Sprint</h3>
+          <p style="color:var(--muted);font-size:13px">20 mixed questions · 25 minutes</p>
+          <button class="btn" onclick="startMiniTest('ACT', 20, 25)">Start Mini Test</button>
+        </div>
+        <div class="card">
+          <h3 style="margin:0 0 6px">Custom Practice</h3>
+          <p style="color:var(--muted);font-size:13px">Select topic and difficulty directly</p>
+          <button class="btn" onclick="navigate('practice')">Open Practice</button>
+        </div>
+      </div>
+
+      <div id="testArea" style="margin-top:24px"></div>
+
+      <div class="sectionhead">
+        <div><h2>Test History</h2><p>Past mock examinations recorded.</p></div>
+      </div>
+      <div class="card tablewrap" id="testHistory"></div>
+    </section>
+
+    <!-- Page: Mistakes Notebook -->
+    <section class="page" id="page-mistakes">
+      <div class="sectionhead">
+        <div>
+          <h2>Mistake Notebook</h2>
+          <p>Review missed items and understand the underlying principles.</p>
+        </div>
+        <button class="btn primary" onclick="reviewMistakes()">Drill Mistakes Notebook →</button>
+      </div>
+      <div class="card" id="mistakeList"></div>
+    </section>
+
+    <!-- Page: Analytics -->
+    <section class="page" id="page-analytics">
+      <div class="sectionhead">
+        <div>
+          <h2>Performance Analytics</h2>
+          <p>Real diagnostic metrics calculated from your saved practice sets.</p>
+        </div>
+        <button class="btn small" onclick="exportData()">Export Backup JSON ↓</button>
+      </div>
+      <div class="stats">
+        <div class="stat"><div class="stathead">TOTAL SOLVED</div><strong id="anaAnswered">0</strong></div>
+        <div class="stat"><div class="stathead">CORRECT</div><strong id="anaCorrect">0</strong></div>
+        <div class="stat"><div class="stathead">ACCURACY</div><strong id="anaAccuracy">—</strong></div>
+        <div class="stat"><div class="stathead">TIME SPENT</div><strong id="anaTime">0m</strong></div>
+      </div>
+      <div class="grid2">
+        <div class="card">
+          <h3 style="margin:0 0 14px">Accuracy By Subject</h3>
+          <div id="subjectAnalytics"></div>
+        </div>
+        <div class="card">
+          <h3 style="margin:0 0 14px">High-Priority Review Topics</h3>
+          <div id="weakAreas"></div>
+        </div>
+      </div>
+      <div class="sectionhead">
+        <div><h2>Recent Question Log</h2></div>
+      </div>
+      <div class="card tablewrap" id="attemptHistory"></div>
+    </section>
+
+    <!-- Page: Study Planner -->
+    <section class="page" id="page-planner">
+      <div class="sectionhead">
+        <div>
+          <h2>Study Planner</h2>
+          <p>Set weekly target goals and manage study tasks.</p>
+        </div>
+      </div>
+      <div class="grid2">
+        <div class="card">
+          <h3 style="margin:0 0 14px">Add Study Task</h3>
+          <form id="taskForm" style="display:grid;gap:12px">
+            <div>
+              <label style="font-size:12px;color:var(--muted)">Task Description</label>
+              <input class="input" style="width:100%" id="taskTitle" required placeholder="e.g. Master Desmos regression & watch video">
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+              <div>
+                <label style="font-size:12px;color:var(--muted)">Date</label>
+                <input class="input" style="width:100%" type="date" id="taskDate" required>
+              </div>
+              <div>
+                <label style="font-size:12px;color:var(--muted)">Duration (Minutes)</label>
+                <input class="input" style="width:100%" type="number" min="5" max="300" id="taskMinutes" value="30" required>
+              </div>
+            </div>
+            <button class="btn primary" type="submit" style="margin-top:6px">+ Add Task</button>
+          </form>
+        </div>
+
+        <div class="card">
+          <h3 style="margin:0 0 8px">Weekly Goal</h3>
+          <p style="color:var(--muted);font-size:13px;margin:0 0 16px">Track scheduled study minutes to stay consistent.</p>
+          <div style="display:flex;gap:10px">
+            <input class="input" style="width:140px" type="number" id="weeklyGoal" min="30" max="3000" step="30" value="300">
+            <button class="btn" onclick="saveGoal()">Update Goal</button>
+          </div>
+          <div class="progress"><span id="goalProgress"></span></div>
+          <p class="smalltext" id="goalText" style="color:var(--muted)"></p>
+        </div>
+      </div>
+
+      <div class="sectionhead">
+        <div><h2>Scheduled Tasks</h2></div>
+      </div>
+      <div class="card" id="taskList"></div>
+    </section>
+
+    <!-- Page: Parth AI Tutor -->
+    <section class="page" id="page-parth">
+      <div class="sectionhead">
+        <div>
+          <h2>Parth AI Tutor ✧</h2>
+          <p>Instant answers, step-by-step reasoning, and concise explanations.</p>
+        </div>
+        <span class="pill green">POWERED BY PUTER.JS</span>
+      </div>
+      <div class="qgrid">
+        <div class="card chatcard">
+          <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:12px;border-bottom:1px solid var(--border)">
+            <div>
+              <h3 style="margin:0;font-size:16px">Parth Personal Study Coach</h3>
+              <div class="smalltext" id="aiStatus" style="color:var(--cyan)">Ready to assist</div>
+            </div>
+            <span style="font-size:26px">🤖</span>
+          </div>
+
+          <div style="display:flex;gap:8px;flex-wrap:wrap;padding:12px 0 6px">
+            <button class="btn small" onclick="quickAsk('Explain percentage change simply with one quick example.')">Percentage change</button>
+            <button class="btn small" onclick="quickAsk('How do I spot transitions like However vs Therefore instantly?')">Transitions</button>
+            <button class="btn small" onclick="quickAsk('Teach me the top 3 Desmos strategies for Digital SAT math.')">Desmos tricks</button>
+            <button class="btn small" onclick="explainCurrent()">Explain active question</button>
+          </div>
+
+          <div class="messages" id="chatMessages">
+            <div class="bubble assistant">
+              <p>Hi! I'm Parth. I'll keep test prep clear and focused.</p>
+              <p>Ask me a question, share a problem from your practice set, or ask for a concept lesson.</p>
+            </div>
+          </div>
+
+          <form class="chatinput" id="chatForm">
+            <textarea class="textarea" id="chatInput" placeholder="Ask Parth a question or paste a problem…" required></textarea>
+            <button class="btn primary" id="chatSend" type="submit">Send ↑</button>
+          </form>
+        </div>
+
+        <div style="display:grid;gap:14px;align-content:start">
+          <div class="card">
+            <h3 style="margin:0 0 8px;font-size:15px">Parth's Teaching Rules</h3>
+            <p style="color:var(--muted);font-size:12.5px;margin:0 0 8px">✓ Answer the core question first</p>
+            <p style="color:var(--muted);font-size:12.5px;margin:0 0 8px">✓ 2–4 concise steps when solving</p>
+            <p style="color:var(--muted);font-size:12.5px;margin:0 0 8px">✓ Plain formulas, no raw LaTeX delays</p>
+            <p style="color:var(--muted);font-size:12.5px;margin:0">✓ No repetitive conclusions or filler</p>
+          </div>
+          <div class="card">
+            <h3 style="margin:0 0 6px;font-size:15px">Prefer Video Explanations?</h3>
+            <p style="color:var(--muted);font-size:12.5px;margin:0 0 12px">Access high-yield YouTube lectures anytime.</p>
+            <button class="btn small" style="width:100%" onclick="navigate('videos')">Open Video Studio ▶</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Page: Settings -->
+    <section class="page" id="page-settings">
+      <div class="sectionhead">
+        <div>
+          <h2>Settings</h2>
+          <p>Personalize your studio and manage local browser progress.</p>
+        </div>
+      </div>
+      <div class="grid2">
+        <div class="card">
+          <h3 style="margin:0 0 14px">Your Profile</h3>
+          <form id="profileForm" style="display:grid;gap:12px">
+            <div>
+              <label style="font-size:12px;color:var(--muted)">Display Name</label>
+              <input class="input" style="width:100%" id="profileName" placeholder="Your name">
+            </div>
+            <div>
+              <label style="font-size:12px;color:var(--muted)">Target Test Date</label>
+              <input class="input" style="width:100%" id="targetDate" type="date">
+            </div>
+            <button class="btn primary" type="submit">Save Profile</button>
+          </form>
+        </div>
+
+        <div class="card">
+          <h3 style="margin:0 0 10px">Data & Backup</h3>
+          <p style="color:var(--muted);font-size:13px;margin:0 0 14px">Export a local JSON backup or reset your practice data.</p>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <button class="btn" onclick="exportData()">Export Data JSON</button>
+            <button class="btn danger" onclick="resetData()">Reset All Progress</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Robust In-App YouTube Modal Player with External Fallback -->
+    <div id="videoModal" class="modal-overlay hide" onclick="closeVideoModal(event)">
+      <div class="modal-content" onclick="event.stopPropagation()">
+        <div class="modal-header">
+          <div>
+            <h3 id="modalVideoTitle" style="margin:0;font-size:15px;color:#fff">Video Title</h3>
+            <span id="modalVideoChannel" style="font-size:12px;color:var(--muted)">Channel</span>
+          </div>
+          <div style="display:flex;gap:8px">
+            <a id="modalExternalLink" href="#" target="_blank" rel="noopener noreferrer" class="btn small" style="background:rgba(255,0,0,0.2);color:#ff7788;border-color:rgba(255,0,0,0.3)">
+              Open on YouTube ↗
+            </a>
+            <button class="btn small" onclick="closeVideoModal()">✕ Close</button>
+          </div>
+        </div>
+        <div class="video-player-container">
+          <iframe id="videoIframe"
+                  src=""
+                  title="YouTube video player"
+                  frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerpolicy="strict-origin-when-cross-origin"
+                  allowfullscreen>
+          </iframe>
+        </div>
+      </div>
+    </div>
+
+    <div class="toast hide" id="toast" role="status"></div>
+  </main>
+</div>
+
+<script>
+'use strict';
+const KEY = 'northstar_study_v7';
+const baseState = { exam: 'SAT', profile: { name: '', targetDate: '' }, attempts: [], mistakes: [], tests: [], tasks: [], goal: 300, streak: 0, lastActivity: '', timeSpent: 0 };
+
+function clone(x) { return JSON.parse(JSON.stringify(x)); }
+function load() {
+  try {
+    const x = JSON.parse(localStorage.getItem(KEY) || 'null');
+    return x ? { ...clone(baseState), ...x, profile: { ...baseState.profile, ...x.profile } } : clone(baseState);
+  } catch(e) { return clone(baseState); }
+}
+
+let state = load();
+let session = null;
+let currentQuestion = null;
+let timerHandle = null;
+let toastHandle = null;
+
+function save() {
+  try { localStorage.setItem(KEY, JSON.stringify(state)); }
+  catch(e) { toast('Storage capacity reached.'); }
+}
+
+function esc(s) {
+  return String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
+
+function toast(s) {
+  const e = document.getElementById('toast');
+  e.textContent = s;
+  e.classList.remove('hide');
+  clearTimeout(toastHandle);
+  toastHandle = setTimeout(() => e.classList.add('hide'), 3000);
+}
+
+function today() { return new Date().toISOString().slice(0, 10); }
+function rand(n) { return Math.floor(Math.random() * n); }
+function pick(a) { return a[rand(a.length)]; }
+function shuffle(a) {
+  a = a.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    let j = rand(i + 1);
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+/* -------------------------------------------------------------
+   VERIFIED HIGH-PERFORMANCE YOUTUBE LECTURES
+------------------------------------------------------------- */
+const YOUTUBE_LECTURES = [
+  {
+    id: 'desmos-sat',
+    title: 'The Ultimate Digital SAT Desmos Strategy & Hacks Guide',
+    channel: 'Tutorllini Test Prep',
+    videoId: 'i_yZ2E_V81E',
+    subject: 'Math',
+    topic: 'Desmos / Functions / Equations',
+    description: 'Learn how to solve 70%+ of Digital SAT Math questions in seconds using Desmos regression, intersection, and slider tools.'
+  },
+  {
+    id: 'algebra-sat',
+    title: 'Digital SAT Math: Linear Equations & Systems Complete Review',
+    channel: 'Scalar Learning',
+    videoId: 'w44g-aI_pEw',
+    subject: 'Math',
+    topic: 'Linear equations',
+    description: 'Master slopes, intercepts, and infinite vs zero solutions in systems of linear equations.'
+  },
+  {
+    id: 'quadratics-sat',
+    title: 'Quadratic Equations & Parabola Vertex Form Masterclass',
+    channel: 'John Chung Prep',
+    videoId: '17C3D8qKrvg',
+    subject: 'Math',
+    topic: 'Quadratics',
+    description: 'Discriminant conditions, vertex shortcuts, and polynomial root factoring tricks.'
+  },
+  {
+    id: 'sat-transitions',
+    title: 'Digital SAT Transitions: The 3 Rules You Must Know',
+    channel: 'PrepPros',
+    videoId: '5m_WJ_Z2Krs',
+    subject: 'Reading',
+    topic: 'Transitions',
+    description: 'How to easily spot contrast, cause-and-effect, and continuation transitions with 100% accuracy.'
+  },
+  {
+    id: 'sat-grammar',
+    title: 'SAT & ACT Punctuation & Conventions Full Crash Course',
+    channel: 'Strategic Test Prep',
+    videoId: 'Zt-6kP7Qy7M',
+    subject: 'Reading',
+    topic: 'Grammar / Standard English conventions',
+    description: 'Semicolons, colons, comma splices, non-essential clauses, and subject-verb agreements.'
+  },
+  {
+    id: 'evidence-sat',
+    title: 'Command of Evidence & Paired Data Passages',
+    channel: 'Khan Academy SAT',
+    videoId: 'D0E81Z3vLqY',
+    subject: 'Reading',
+    topic: 'Command of evidence / Main idea',
+    description: 'Extracting hypotheses and matching author claims with quantitative tables.'
+  },
+  {
+    id: 'act-science-strategy',
+    title: 'ACT Science Section: Complete 36 Strategy Walkthrough',
+    channel: 'SuperTutorTV',
+    videoId: '5d_LwR9uCco',
+    subject: 'Data',
+    topic: 'Research reasoning / Data interpretation',
+    description: 'How to decode scientific graphs, conflicting viewpoints, and experimental controls quickly.'
+  },
+  {
+    id: 'statistics-sat',
+    title: 'SAT / ACT Statistics, Mean, Median & Standard Deviation',
+    channel: 'Organic Chemistry Tutor',
+    videoId: 'uhxtU3pkCkc',
+    subject: 'Data',
+    topic: 'Statistics / Percent change',
+    description: 'Step-by-step review of means, medians, sampling margins of error, and probabilities.'
+  }
+];
+
+function renderVideos() {
+  const grid = document.getElementById('videoGrid');
+  if (!grid) return;
+  const subj = document.getElementById('videoSubjectFilter').value;
+  const query = document.getElementById('videoSearchInput').value.toLowerCase().trim();
+
+  const filtered = YOUTUBE_LECTURES.filter(v => {
+    const matchSubj = subj === 'All' || v.subject === subj;
+    const matchQuery = !query || v.title.toLowerCase().includes(query) || v.topic.toLowerCase().includes(query) || v.description.toLowerCase().includes(query);
+    return matchSubj && matchQuery;
+  });
+
+  if (!filtered.length) {
+    grid.innerHTML = '<div class="card" style="grid-column:1/-1;text-align:center;padding:40px;color:var(--muted)">No video lectures found matching your criteria.</div>';
+    return;
+  }
+
+  grid.innerHTML = filtered.map(v => `
+    <div class="yt-card">
+      <div class="yt-thumb-wrap" onclick="openVideoPlayer('${v.videoId}', '${esc(v.title)}', '${esc(v.channel)}')">
+        <img src="https://img.youtube.com/vi/${v.videoId}/hqdefault.jpg" alt="${esc(v.title)}" loading="lazy">
+        <div class="yt-play-badge">▶</div>
+      </div>
+      <div class="yt-info">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+          <span class="pill ${v.subject === 'Math' ? '' : v.subject === 'Reading' ? 'pink' : 'green'}">${esc(v.subject)}</span>
+          <span class="smalltext" style="color:var(--muted);font-size:11px">${esc(v.topic)}</span>
+        </div>
+        <h3>${esc(v.title)}</h3>
+        <div class="yt-channel">By ${esc(v.channel)}</div>
+        <p style="font-size:12.5px;color:var(--muted);margin:0 0 14px;flex:1">${esc(v.description)}</p>
+        <div style="display:flex;gap:8px">
+          <button class="btn small primary" style="flex:1" onclick="openVideoPlayer('${v.videoId}', '${esc(v.title)}', '${esc(v.channel)}')">▶ Watch Here</button>
+          <a href="https://www.youtube.com/watch?v=${v.videoId}" target="_blank" rel="noopener noreferrer" class="btn small" title="Open directly in YouTube">↗</a>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function openVideoPlayer(videoId, title, channel) {
+  const modal = document.getElementById('videoModal');
+  const iframe = document.getElementById('videoIframe');
+  const extLink = document.getElementById('modalExternalLink');
+  
+  document.getElementById('modalVideoTitle').textContent = title;
+  document.getElementById('modalVideoChannel').textContent = 'Channel: ' + channel;
+  
+  const ytDirectUrl = `https://www.youtube.com/watch?v=${videoId}`;
+  extLink.href = ytDirectUrl;
+
+  /* Proper origin & referrer policy to prevent Error 153 and browser embed blocks */
+  const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&enablejsapi=1&rel=0`;
+  iframe.src = embedUrl;
+  
+  modal.classList.remove('hide');
+}
+
+function closeVideoModal(e) {
+  const modal = document.getElementById('videoModal');
+  const iframe = document.getElementById('videoIframe');
+  iframe.src = '';
+  modal.classList.add('hide');
+}
+
+function openSubjectVideos(subj) {
+  navigate('videos');
+  document.getElementById('videoSubjectFilter').value = subj;
+  document.getElementById('videoSearchInput').value = '';
+  renderVideos();
+}
+
+function watchTopicVideo(topicName) {
+  const targetTopic = topicName || (currentQuestion ? currentQuestion.topic : '');
+  navigate('videos');
+  if (targetTopic) {
+    document.getElementById('videoSearchInput').value = targetTopic.split(' ')[0];
+    document.getElementById('videoSubjectFilter').value = 'All';
+  }
+  renderVideos();
+}
+
+/* -------------------------------------------------------------
+   NAVIGATION & CONTROLLER
+------------------------------------------------------------- */
+function navigate(p) {
+  document.querySelectorAll('.page').forEach(x => x.classList.remove('active'));
+  const target = document.getElementById('page-' + p);
+  if (target) target.classList.add('active');
+  document.querySelectorAll('[data-page]').forEach(b => b.classList.toggle('active', b.dataset.page === p));
+  
+  const crumbMap = {
+    dashboard: 'Dashboard',
+    practice: 'Practice Studio',
+    videos: 'YouTube Video Studio',
+    tests: 'Mock Test Simulator',
+    mistakes: 'Mistake Notebook',
+    analytics: 'Analytics',
+    planner: 'Study Planner',
+    parth: 'Parth AI Tutor',
+    settings: 'Settings'
+  };
+  document.getElementById('breadcrumb').textContent = crumbMap[p] || p;
+  document.getElementById('sidebar').classList.remove('open');
+
+  if (p === 'dashboard') renderDashboard();
+  if (p === 'practice') renderQuestion();
+  if (p === 'videos') renderVideos();
+  if (p === 'tests') renderTests();
+  if (p === 'mistakes') renderMistakes();
+  if (p === 'analytics') renderAnalytics();
+  if (p === 'planner') renderPlanner();
+  if (p === 'settings') renderSettings();
+}
+
+document.querySelectorAll('[data-page]').forEach(b => b.addEventListener('click', () => navigate(b.dataset.page)));
+
+function changeExam(v) {
+  state.exam = v;
+  save();
+  document.getElementById('examSelect').value = v;
+  if (session) { stopTimer(); session = null; }
+  renderDashboard();
+  toast('Exam preference updated to ' + v);
+}
+
+/* -------------------------------------------------------------
+   QUESTION GENERATION ENGINE
+------------------------------------------------------------- */
+function gcd(a, b) {
+  a = Math.abs(a); b = Math.abs(b);
+  while (b) { [a, b] = [b, a % b]; }
+  return a || 1;
+}
+
+function question(subject = 'All', difficulty = 'All', exam = state.exam) {
+  subject = subject === 'All' ? pick(['Math', 'Reading', 'Data']) : subject;
+  difficulty = difficulty === 'All' ? pick(['Easy', 'Medium', 'Hard']) : difficulty;
+  let prompt = '', answer = '', wrong = [], explanation = '', topic = '';
+
+  if (subject === 'Math') {
+    const kind = pick(['linear', 'percent', 'mean', 'function', 'sequence', 'ratio', 'slope', 'system', 'quadratic', 'probability']);
+    if (kind === 'linear') {
+      let a = rand(8) + 2, b = rand(15) - 7, x = rand(13) - 5, c = a * x + b;
+      prompt = `If ${a}x ${b < 0 ? '− ' + -b : '+ ' + b} = ${c}, what is the value of x?`;
+      answer = String(x);
+      explanation = `Subtract ${b} from both sides: ${a}x = ${c - b}. Then divide by ${a} to get x = ${x}.`;
+      topic = 'Linear equations';
+    } else if (kind === 'percent') {
+      let n = (rand(18) + 4) * 5, p = pick([10, 15, 20, 25, 30, 40]);
+      prompt = `A quantity increases from ${n} to ${+(n * (1 + p / 100)).toFixed(2)}. What is the percentage increase?`;
+      answer = p + '%';
+      explanation = `Percentage Increase = [(New Value − Original Value) / Original Value] × 100 = [${+(n * p / 100).toFixed(2)} / ${n}] × 100 = ${p}%.`;
+      topic = 'Percent change';
+    } else if (kind === 'mean') {
+      let a = Array.from({ length: 5 }, () => rand(20) + 1), sum = a.reduce((x, y) => x + y, 0);
+      prompt = `What is the arithmetic mean of ${a.join(', ')}?`;
+      answer = String(sum / 5);
+      explanation = `Sum the 5 values: ${sum}. Divide by 5: ${sum} ÷ 5 = ${sum / 5}.`;
+      topic = 'Statistics';
+    } else if (kind === 'function') {
+      let a = rand(5) + 1, b = rand(9) - 4, c = rand(9) - 4, x = rand(7) - 3;
+      prompt = `If f(x) = ${a}x² ${b < 0 ? '− ' + -b : '+' + b}x ${c < 0 ? '− ' + -c : '+' + c}, evaluate f(${x}).`;
+      answer = String(a * x * x + b * x + c);
+      explanation = `Substitute ${x} into the function: ${a}(${x})² + (${b})(${x}) + (${c}) = ${answer}.`;
+      topic = 'Functions';
+    } else if (kind === 'sequence') {
+      let a = rand(10) + 1, d = rand(7) + 2, n = rand(5) + 5;
+      prompt = `An arithmetic sequence begins ${a}, ${a + d}, ${a + 2 * d}, … What is its ${n}th term?`;
+      answer = String(a + (n - 1) * d);
+      explanation = `Use aₙ = a₁ + (n − 1)d: ${a} + (${n - 1})(${d}) = ${answer}.`;
+      topic = 'Sequences';
+    } else if (kind === 'ratio') {
+      let a = rand(5) + 2, b = rand(5) + 2, k = rand(8) + 2;
+      prompt = `The ratio of green to purple beads is ${a}:${b}. If there are ${a * k} green beads, how many purple beads are there?`;
+      answer = String(b * k);
+      explanation = `One part equals ${k}. The number of purple beads = ${b} × ${k} = ${answer}.`;
+      topic = 'Ratios';
+    } else if (kind === 'slope') {
+      let x1 = rand(7) - 3, y1 = rand(9) - 4, x2 = x1 + rand(5) + 1, y2 = y1 + rand(9) - 4, nu = y2 - y1, de = x2 - x1, g = gcd(nu, de);
+      answer = de / g === 1 ? String(nu / g) : `${nu / g}/${de / g}`;
+      prompt = `What is the slope (m) of the line through (${x1}, ${y1}) and (${x2}, ${y2})?`;
+      explanation = `Slope m = (y₂ − y₁) / (x₂ − x₁) = (${y2} − ${y1}) / (${x2} − ${x1}) = ${answer}.`;
+      topic = 'Coordinate geometry';
+    } else if (kind === 'system') {
+      let x = rand(11) - 5, y = rand(11) - 5;
+      prompt = `A system satisfies x + y = ${x + y} and x − y = ${x - y}. What is x?`;
+      answer = String(x);
+      explanation = `Add both equations: 2x = ${2 * x}. Divide by 2 to get x = ${x}.`;
+      topic = 'Systems of equations';
+    } else {
+      let r1 = rand(9) - 4, r2 = rand(9) - 4;
+      prompt = `The equation x² ${-(r1 + r2) < 0 ? '− ' + (-(r1 + r2)) : '+' + (-(r1 + r2))}x + ${r1 * r2} = 0 has roots x = ${r1} and x = ?. What is the second root?`;
+      answer = String(r2);
+      explanation = `Sum of roots = -b/a = ${r1 + r2}. One root is ${r1}, so the second root is ${r2}.`;
+      topic = 'Quadratics';
+    }
+    const n = Number(answer.replace('%', ''));
+    wrong = [String(n + 1), String(n - 1), String(n + 2)];
+    if (answer.includes('%')) wrong = [(n + 5) + '%', (n - 5) + '%', (n + 10) + '%'];
+    if (answer.includes('/')) wrong = [`${Number(answer.split('/')[0]) + 1}/${answer.split('/')[1]}`, `${answer.split('/')[0]}/${Number(answer.split('/')[1]) + 1}`, `1/${answer.split('/')[1]}`];
+  } else if (subject === 'Data') {
+    const kind = pick(['table', 'prob', 'association']);
+    if (kind === 'table') {
+      let a = rand(20) + 4, b = rand(20) + 4, c = rand(20) + 4;
+      prompt = `A laboratory tests ${a} samples on Monday, ${b} on Tuesday, and ${c} on Wednesday. What is the total number of tested samples?`;
+      answer = String(a + b + c);
+      explanation = `Add the counts: ${a} + ${b} + ${c} = ${answer}.`;
+      topic = 'Data interpretation';
+    } else if (kind === 'prob') {
+      let a = rand(8) + 2, b = rand(8) + 2;
+      prompt = `A bag contains ${a} red tokens and ${b} blue tokens. What is the probability of selecting a red token at random?`;
+      answer = `${a}/${a + b}`;
+      explanation = `Total tokens = ${a + b}. Red tokens = ${a}. Probability = ${a}/${a + b}.`;
+      topic = 'Probability';
+    } else {
+      prompt = 'A study observes that neighborhoods with more parks report lower average summer temperatures. Which conclusion is supported by this observation alone?';
+      answer = 'There is an association between the presence of parks and lower summer temperatures.';
+      wrong = [
+        'Parks are proven to be the sole cause of lower temperatures.',
+        'Every neighborhood with parks has lower temperatures than all other neighborhoods.',
+        'No other factors like elevation or canopy density affect temperature.'
+      ];
+      explanation = 'Observational data establish association or correlation, not definitive causation.';
+      topic = 'Research reasoning';
+    }
+    if (!wrong.length) wrong = [String(Number(answer) + 1), String(Number(answer) - 1), String(Number(answer) + 2)];
+  } else {
+    const kind = pick(['transitions', 'grammar', 'evidence']);
+    if (kind === 'transitions') {
+      let opts = [
+        ['however', 'The first experiment yielded variable results; ___, the replicated run showed complete stability.', 'The two clauses convey contrasting outcomes, requiring "however".'],
+        ['therefore', 'All sensor readings fell within the safety tolerance; ___, the team authorized the launch.', 'The outcome follows logically from the first clause, requiring "therefore".'],
+        ['furthermore', 'The new program improved student literacy metrics; ___, it increased teacher satisfaction scores.', 'The second point adds complementary evidence in the same direction, requiring "furthermore".']
+      ];
+      let t = pick(opts);
+      prompt = `Choose the transition word that best connects the ideas: "${t[1]}"`;
+      answer = t[0];
+      explanation = t[2];
+      wrong = opts.map(x => x[0]).filter(x => x !== answer).slice(0, 3);
+      topic = 'Transitions';
+    } else if (kind === 'grammar') {
+      let singular = rand(2) === 0;
+      prompt = `Select the verb that agrees with the subject: "${singular ? 'The cluster of galaxies' : 'The galaxies'} ___ visible through the observatory lens."`;
+      answer = singular ? 'is' : 'are';
+      wrong = singular ? ['are', 'were being', 'have'] : ['is', 'was', 'has'];
+      explanation = singular ? 'The head noun of the subject is the singular noun "cluster".' : 'The subject "galaxies" is plural, requiring "are".';
+      topic = 'Grammar';
+    } else {
+      prompt = 'An archaeologist discovers obsidian blades in a coastal site where volcanic glass is naturally absent. What is the most plausible inference?';
+      answer = 'The site inhabitants participated in regional trade networks or traveled to volcanic zones.';
+      wrong = [
+        'Volcanoes must have existed directly adjacent to the site.',
+        'Obsidian was the only tool material used by all ancient civilizations.',
+        'The artifacts could not have been transported by human travel.'
+      ];
+      explanation = 'Non-local raw materials provide clear evidence of trade exchange or migration.';
+      topic = 'Command of evidence';
+    }
+  }
+
+  if (!wrong.length) wrong = [String(Number(answer) + 1), String(Number(answer) - 1), String(Number(answer) + 2)];
+  let choices = shuffle([String(answer), ...wrong.map(String)]);
+  choices = [...new Set(choices)];
+  while (choices.length < 4) choices.push('None of these');
+  choices = choices.slice(0, 4);
+  let ai = choices.indexOf(String(answer));
+  if (ai < 0) { choices[0] = String(answer); ai = 0; }
+
+  return {
+    id: Math.random().toString(36).slice(2) + Date.now().toString(36),
+    exam, subject, difficulty, topic, prompt, choices, answer: ai, explanation
+  };
+}
+
+function makeSet(n, subject = 'All', difficulty = 'All', exam = state.exam) {
+  let out = [], seen = new Set(), tries = 0;
+  while (out.length < n && tries < n * 15) {
+    let q = question(subject, difficulty, exam);
+    tries++;
+    if (!seen.has(q.prompt)) {
+      seen.add(q.prompt);
+      out.push(q);
+    }
+  }
+  while (out.length < n) out.push(question(subject, difficulty, exam));
+  return out;
+}
+
+/* -------------------------------------------------------------
+   PRACTICE RUNNER
+------------------------------------------------------------- */
+function startPractice(subject) {
+  stopTimer();
+  const s = subject || document.getElementById('subjectFilter').value;
+  const d = document.getElementById('difficultyFilter').value;
+  session = {
+    mode: 'practice',
+    exam: state.exam,
+    questions: makeSet(10, s, d),
+    index: 0,
+    answers: {},
+    started: Date.now()
+  };
+  currentQuestion = session.questions[0];
+  navigate('practice');
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const p = document.getElementById('questionPanel');
+  if (!session || session.mode !== 'practice') {
+    p.innerHTML = `
+      <div style="text-align:center;padding:40px 10px">
+        <div style="font-size:42px;margin-bottom:12px">✦</div>
+        <h3 style="margin:0 0 8px">Ready when you are</h3>
+        <p style="color:var(--muted);font-size:13px;margin:0 0 20px">Configure your filters and start an original 10-question set.</p>
+        <button class="btn primary" onclick="startPractice()">Start Practice Set</button>
+      </div>`;
+    document.getElementById('sessionProgress').style.width = '0%';
+    document.getElementById('sessionCounter').textContent = 'No active session';
+    document.getElementById('questionMap').innerHTML = '';
+    return;
+  }
+
+  currentQuestion = session.questions[session.index];
+  renderQuestionCard(p, currentQuestion);
+  document.getElementById('sessionProgress').style.width = (Object.keys(session.answers).length / session.questions.length * 100) + '%';
+  document.getElementById('sessionCounter').textContent = `Question ${session.index + 1} of ${session.questions.length} · ${Object.keys(session.answers).length} answered`;
+  renderMap('questionMap');
+
+  const btn = document.getElementById('topicLectureBtn');
+  if (btn && currentQuestion) {
+    btn.textContent = `▶ Watch ${currentQuestion.topic} Lecture`;
+    btn.onclick = () => watchTopicVideo(currentQuestion.topic);
+  }
+}
+
+function renderQuestionCard(panel, q) {
+  const selected = session.answers[q.id];
+  const done = selected !== undefined;
+
+  panel.innerHTML = `
+    <div class="qmeta">
+      <span class="pill">${esc(q.exam)}</span>
+      <span class="pill ${q.subject === 'Math' ? '' : q.subject === 'Reading' ? 'pink' : 'green'}">${esc(q.subject)}</span>
+      <span class="pill ${q.difficulty === 'Hard' ? 'pink' : q.difficulty === 'Medium' ? 'amber' : 'green'}">${esc(q.difficulty)}</span>
+      <span class="smalltext" style="color:var(--muted);font-weight:600">${esc(q.topic)}</span>
+    </div>
+    <div style="font-size:11px;font-weight:700;letter-spacing:1px;color:var(--muted)">QUESTION ${session.index + 1} / ${session.questions.length}</div>
+    <div class="qtext">${esc(q.prompt)}</div>
+    <div class="choices">
+      ${q.choices.map((c, i) => `
+        <button class="choice ${done && i === q.answer ? 'correct' : ''} ${done && i === selected && i !== q.answer ? 'wrong' : ''}"
+                ${done ? 'disabled' : ''} onclick="answerQuestion(${i})">
+          <span class="letter">${'ABCD'[i]}</span>
+          <span>${esc(c)}</span>
+        </button>
+      `).join('')}
+    </div>
+    ${done ? `
+      <div class="explain">
+        <h4>${selected === q.answer ? '✓ Correct Reasoning' : '↻ Key Concept & Takeaway'}</h4>
+        <p>${esc(q.explanation)}</p>
+        <p style="margin-top:8px">Correct Answer: <b>${'ABCD'[q.answer]}.${esc(q.choices[q.answer])}</b></p>
+        <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
+          <button class="btn small" onclick="askParthFor('${q.id}')">✧ Explain with Parth AI</button>
+          <button class="btn small primary" onclick="watchTopicVideo('${esc(q.topic)}')">▶ Watch Topic Video</button>
+        </div>
+      </div>
+    ` : ''}
+    <div class="qfooter">
+      <button class="btn" onclick="prevQ()" ${session.index === 0 ? 'disabled' : ''}>← Previous</button>
+      <div style="display:flex;gap:8px">
+        <button class="btn" onclick="bookmark('${q.id}')">☆ Bookmark</button>
+        <button class="btn primary" onclick="nextQ()">${session.index === session.questions.length - 1 ? 'Finish →' : 'Next →'}</button>
+      </div>
+    </div>
+  `;
+}
+
+function renderMap(id) {
+  const el = document.getElementById(id);
+  if (!el || !session) return;
+  el.innerHTML = session.questions.map((q, i) => `
+    <button class="qnum ${i === session.index ? 'current' : ''} ${session.answers[q.id] !== undefined ? 'done' : ''}" onclick="jumpQ(${i})">
+      ${i + 1}
+    </button>
+  `).join('');
+}
+
+function jumpQ(i) {
+  if (!session) return;
+  session.index = i;
+  if (session.mode === 'practice') renderQuestion();
+  else renderTestQuestion();
+}
+
+function prevQ() {
+  if (session && session.index > 0) {
+    session.index--;
+    session.mode === 'practice' ? renderQuestion() : renderTestQuestion();
+  }
+}
+
+function nextQ() {
+  if (!session) return;
+  if (session.index < session.questions.length - 1) {
+    session.index++;
+    session.mode === 'practice' ? renderQuestion() : renderTestQuestion();
+  } else if (session.mode === 'test') {
+    advanceSection(false);
+  } else {
+    finishPractice();
+  }
+}
+
+function record(q, index, mode) {
+  const correct = index === q.answer;
+  session.answers[q.id] = index;
+  state.attempts.push({
+    id: q.id, exam: q.exam, subject: q.subject, topic: q.topic,
+    difficulty: q.difficulty, prompt: q.prompt, choices: q.choices,
+    answer: q.answer, selected: index, correct,
+    explanation: q.explanation, date: new Date().toISOString(), mode
+  });
+  if (!correct) {
+    state.mistakes.unshift({ ...q, selected: index, date: new Date().toISOString() });
+    if (state.mistakes.length > 500) state.mistakes.length = 500;
+  }
+  markActivity();
+  save();
+}
+
+function answerQuestion(i) {
+  if (!session) return;
+  const q = session.questions[session.index];
+  if (session.answers[q.id] !== undefined) return;
+  record(q, i, session.mode);
+  session.mode === 'practice' ? renderQuestion() : renderTestQuestion();
+  renderDashboard();
+}
+
+function finishPractice() {
+  if (!session || session.mode !== 'practice') return;
+  const old = session;
+  const total = Object.keys(old.answers).length;
+  const correct = old.questions.filter(q => old.answers[q.id] === q.answer).length;
+  state.timeSpent += Math.max(0, Math.round((Date.now() - old.started) / 60000));
+  save();
+  session = null;
+  currentQuestion = null;
+
+  document.getElementById('questionPanel').innerHTML = `
+    <div style="text-align:center;padding:40px 10px">
+      <div style="font-size:46px;margin-bottom:12px">🎉</div>
+      <h2 style="margin:0 0 8px">Session Complete!</h2>
+      <p style="color:var(--muted);font-size:14px;margin:0 0 16px">You answered ${total} of ${old.questions.length} questions.</p>
+      <div style="font-size:48px;font-weight:900;font-family:'JetBrains Mono',monospace;color:var(--cyan);margin-bottom:12px">
+        ${total ? Math.round(correct / total * 100) + '%' : '—'}
+      </div>
+      <p style="color:#cbd5e1;margin-bottom:24px">${correct} correct answers out of ${total} attempted.</p>
+      <div style="display:flex;justify-content:center;gap:10px">
+        <button class="btn primary" onclick="startPractice()">Practice Again</button>
+        <button class="btn" onclick="navigate('analytics')">View Analytics</button>
+        <button class="btn" onclick="navigate('videos')">Review Videos</button>
+      </div>
+    </div>`;
+  document.getElementById('questionMap').innerHTML = '';
+  document.getElementById('sessionCounter').textContent = 'Session completed';
+  document.getElementById('sessionProgress').style.width = '100%';
+  renderDashboard();
+}
+
+function bookmark(id) {
+  const q = session?.questions.find(x => x.id === id);
+  if (!q) return;
+  let a = [];
+  try { a = JSON.parse(localStorage.getItem('northstar_saved_questions') || '[]'); } catch(e) {}
+  if (a.some(x => x.id === id)) { toast('Already saved in bookmarks.'); return; }
+  a.unshift(q);
+  localStorage.setItem('northstar_saved_questions', JSON.stringify(a));
+  toast('Question bookmarked.');
+}
+
+/* -------------------------------------------------------------
+   MOCK TEST SIMULATOR
+------------------------------------------------------------- */
+function startFullTest(exam) {
+  state.exam = exam;
+  save();
+  document.getElementById('examSelect').value = exam;
+  stopTimer();
+  let sections;
+  if (exam === 'SAT') {
+    sections = [
+      { name: 'Reading & Writing · Module 1', subject: 'Reading', n: 27, minutes: 32, module: 1 },
+      { name: 'Reading & Writing · Module 2', subject: 'Reading', n: 27, minutes: 32, module: 2 },
+      { name: 'Math · Module 1', subject: 'Math', n: 22, minutes: 35, module: 1 },
+      { name: 'Math · Module 2', subject: 'Math', n: 22, minutes: 35, module: 2 }
+    ];
+  } else {
+    sections = [
+      { name: 'English', subject: 'Reading', n: 50, minutes: 35 },
+      { name: 'Math', subject: 'Math', n: 45, minutes: 50 },
+      { name: 'Reading', subject: 'Reading', n: 36, minutes: 40 },
+      { name: 'Science', subject: 'Data', n: 40, minutes: 40 }
+    ];
+  }
+  session = {
+    mode: 'test', testType: 'full', exam, sections, sectionIndex: 0,
+    questions: [], index: 0, answers: {}, started: Date.now(),
+    sectionStart: Date.now(), remaining: sections[0].minutes * 60,
+    sectionResults: [], difficultyBias: 'Medium'
+  };
+  loadTestSection();
+  navigate('tests');
+  renderTestShell();
+  renderTestQuestion();
+  startTimer();
+}
+
+function startMiniTest(exam, n, minutes) {
+  state.exam = exam;
+  save();
+  document.getElementById('examSelect').value = exam;
+  stopTimer();
+  session = {
+    mode: 'test', testType: 'mini', exam,
+    sections: [{ name: exam + ' Mixed Sprint', subject: 'All', n, minutes }],
+    sectionIndex: 0,
+    questions: makeSet(n, 'All', 'All', exam),
+    index: 0, answers: {}, started: Date.now(),
+    sectionStart: Date.now(), remaining: minutes * 60,
+    sectionResults: [], difficultyBias: 'Medium'
+  };
+  navigate('tests');
+  renderTestShell();
+  renderTestQuestion();
+  startTimer();
+}
+
+function loadTestSection() {
+  const s = session.sections[session.sectionIndex];
+  let difficulty = s.module === 2 ? session.difficultyBias : 'Medium';
+  session.questions = makeSet(s.n, s.subject, difficulty, session.exam);
+  session.index = 0;
+  session.answers = {};
+  session.sectionStart = Date.now();
+  session.remaining = s.minutes * 60;
+}
+
+function renderTestShell() {
+  document.getElementById('testArea').innerHTML = `
+    <div class="qgrid">
+      <div class="card qbox">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;border-bottom:1px solid var(--border);padding-bottom:14px">
+          <div>
+            <span class="pill" id="testSectionName"></span>
+            <p class="smalltext" id="testInstructions" style="color:var(--muted);margin:4px 0 0"></p>
+          </div>
+          <div style="text-align:right">
+            <div class="smalltext" style="color:var(--muted);font-weight:700">TIME REMAINING</div>
+            <div class="timer" id="testTimer">--:--</div>
+          </div>
+        </div>
+        <div id="testQuestion"></div>
+      </div>
+      <div class="card" style="align-self:start">
+        <h3 style="margin:0 0 6px;font-size:15px">Section Navigator</h3>
+        <p class="smalltext" id="testCounter" style="color:var(--muted)"></p>
+        <div class="progress"><span id="testProgress"></span></div>
+        <div class="qmap" id="testMap"></div>
+        <button class="btn danger" style="width:100%;margin-top:20px" onclick="finishTest(false,true)">Submit / End Test</button>
+      </div>
+    </div>`;
+}
+
+function renderTestQuestion() {
+  if (!session || session.mode !== 'test') return;
+  const sec = session.sections[session.sectionIndex];
+  document.getElementById('testSectionName').textContent = `${session.exam} · ${sec.name}`;
+  document.getElementById('testInstructions').textContent = `Section ${session.sectionIndex + 1} of ${session.sections.length} · ${sec.n} items · ${sec.minutes} mins`;
+  const q = session.questions[session.index];
+  currentQuestion = q;
+  renderQuestionCard(document.getElementById('testQuestion'), q);
+  document.getElementById('testCounter').textContent = `Q ${session.index + 1}/${session.questions.length} · ${Object.keys(session.answers).length} answered`;
+  document.getElementById('testProgress').style.width = (Object.keys(session.answers).length / session.questions.length * 100) + '%';
+  renderMap('testMap');
+  updateTimerDisplay();
+}
+
+function startTimer() {
+  stopTimer();
+  timerHandle = setInterval(() => {
+    if (!session || session.mode !== 'test') { stopTimer(); return; }
+    session.remaining = Math.max(0, Math.ceil((session.sectionStart + session.sections[session.sectionIndex].minutes * 60000 - Date.now()) / 1000));
+    updateTimerDisplay();
+    if (session.remaining <= 0) advanceSection(true);
+  }, 1000);
+}
+
+function stopTimer() {
+  if (timerHandle) { clearInterval(timerHandle); timerHandle = null; }
+}
+
+function updateTimerDisplay() {
+  const el = document.getElementById('testTimer');
+  if (!el || !session) return;
+  const sec = session.remaining;
+  el.textContent = String(Math.floor(sec / 60)).padStart(2, '0') + ':' + String(sec % 60).padStart(2, '0');
+  el.classList.toggle('warning', sec < 300);
+}
+
+function advanceSection(expired = false) {
+  if (!session || session.mode !== 'test') return;
+  const sec = session.sections[session.sectionIndex];
+  const rows = session.questions;
+  const answered = Object.keys(session.answers).length;
+  const correct = rows.filter(q => session.answers[q.id] === q.answer).length;
+  session.sectionResults.push({ name: sec.name, total: rows.length, answered, correct, minutes: sec.minutes, expired });
+
+  if (session.sectionIndex < session.sections.length - 1) {
+    session.sectionIndex++;
+    loadTestSection();
+    renderTestShell();
+    renderTestQuestion();
+    toast(expired ? 'Time expired. Moving to next section.' : 'Section submitted.');
+  } else {
+    finishTest(expired, false);
+  }
+}
+
+function finishTest(expired = false, manual = false) {
+  if (!session || session.mode !== 'test') return;
+  if (manual && !confirm('Submit current test progress and compute diagnostic estimates?')) return;
+
+  const sec = session.sections[session.sectionIndex];
+  const rows = session.questions;
+  const answered = Object.keys(session.answers).length;
+  const correct = rows.filter(q => session.answers[q.id] === q.answer).length;
+  session.sectionResults.push({ name: sec.name, total: rows.length, answered, correct, minutes: sec.minutes, expired });
+
+  stopTimer();
+  const old = session;
+  const results = old.sectionResults;
+
+  let totalCorrect = results.reduce((a, b) => a + b.correct, 0);
+  let totalQuestions = results.reduce((a, b) => a + b.total, 0);
+  let estimatedScore = old.exam === 'SAT'
+    ? Math.round((400 + 1200 * totalCorrect / Math.max(1, totalQuestions)) / 10) * 10
+    : Math.max(1, Math.min(36, Math.round(1 + 35 * totalCorrect / Math.max(1, totalQuestions))));
+
+  const scoreRecord = {
+    date: new Date().toISOString(),
+    exam: old.exam,
+    type: old.testType,
+    estimate: estimatedScore,
+    minutes: Math.max(1, Math.round((Date.now() - old.started) / 60000))
+  };
+
+  state.tests.unshift(scoreRecord);
+  state.timeSpent += scoreRecord.minutes;
+  save();
+
+  session = null;
+  currentQuestion = null;
+  renderDashboard();
+  renderTests();
+
+  document.getElementById('testArea').innerHTML = `
+    <div class="card" style="text-align:center;padding:40px 20px">
+      <div style="font-size:46px;margin-bottom:12px">🏁</div>
+      <h2 style="margin:0 0 6px">Mock Simulation Completed</h2>
+      <p style="color:var(--muted);font-size:14px;margin:0 0 20px">${scoreRecord.exam} Diagnostic Estimated Score</p>
+      <div style="font-size:54px;font-weight:900;font-family:'JetBrains Mono',monospace;color:var(--cyan);margin-bottom:12px">
+        ${estimatedScore} ${scoreRecord.exam === 'SAT' ? '/ 1600' : '/ 36'}
+      </div>
+      <p style="color:#cbd5e1;max-width:500px;margin:0 auto 24px">Raw score: ${totalCorrect} of ${totalQuestions} questions correct (${Math.round(totalCorrect / totalQuestions * 100)}%).</p>
+      <div style="display:flex;justify-content:center;gap:10px">
+        <button class="btn primary" onclick="navigate('mistakes')">Review Mistakes</button>
+        <button class="btn" onclick="navigate('videos')">Watch Helpful Videos</button>
+        <button class="btn" onclick="startFullTest('${scoreRecord.exam}')">Retake Test</button>
+      </div>
+    </div>`;
+}
+
+function renderTests() {
+  const el = document.getElementById('testHistory');
+  if (!el) return;
+  el.innerHTML = state.tests.length ? `
+    <table>
+      <thead>
+        <tr><th>Date</th><th>Exam</th><th>Format</th><th>Estimated Score</th><th>Duration</th></tr>
+      </thead>
+      <tbody>
+        ${state.tests.map(t => `
+          <tr>
+            <td>${esc(new Date(t.date).toLocaleDateString())}</td>
+            <td><span class="pill">${esc(t.exam)}</span></td>
+            <td>${esc(t.type)}</td>
+            <td style="font-weight:700;color:var(--cyan)">${t.estimate ?? '—'}</td>
+            <td>${t.minutes}m</td>
+          </tr>
+        `).join('')}
+      </tbody>
+    </table>` : '<div style="text-align:center;padding:30px;color:var(--muted)">No completed mock tests recorded yet.</div>';
+}
+
+/* -------------------------------------------------------------
+   ANALYTICS, DASHBOARD & MISTAKES
+------------------------------------------------------------- */
+function markActivity() {
+  const d = today();
+  if (state.lastActivity !== d) {
+    const prev = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+    state.streak = state.lastActivity === prev ? state.streak + 1 : 1;
+    state.lastActivity = d;
+  }
+}
+
+function accuracy(a) {
+  return a.length ? Math.round(a.filter(x => x.correct).length / a.length * 100) : null;
+}
+
+function renderDashboard() {
+  const a = state.attempts;
+  const acc = accuracy(a);
+  document.getElementById('statAnswered').textContent = a.length;
+  document.getElementById('statAccuracy').textContent = acc === null ? '—' : acc + '%';
+  document.getElementById('statStreak').textContent = (state.streak || 0) + ' days';
+  document.getElementById('statTests').textContent = state.tests.length;
+  document.getElementById('greeting').textContent = state.profile.name ? `Welcome back, ${state.profile.name}.` : 'Your progress starts with your first question.';
+
+  const r = document.getElementById('recentActivity');
+  const recent = a.slice(-5).reverse();
+  r.innerHTML = recent.length ? recent.map(x => `
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--border)">
+      <div>
+        <b style="font-size:14px">${esc(x.topic)}</b>
+        <div class="smalltext" style="color:var(--muted)">${esc(x.subject)} · ${esc(new Date(x.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }))}</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <span class="pill ${x.correct ? 'green' : 'pink'}">${x.correct ? 'Correct' : 'Review'}</span>
+        <button class="btn small" onclick="watchTopicVideo('${esc(x.topic)}')">▶</button>
+      </div>
+    </div>
+  `).join('') : '<div style="text-align:center;padding:26px;color:var(--muted)">No questions solved yet. Start a practice set!</div>';
+}
+
+function renderMistakes() {
+  const el = document.getElementById('mistakeList');
+  if (!state.mistakes.length) {
+    el.innerHTML = '<div style="text-align:center;padding:40px;color:var(--muted)">Your mistake notebook is empty! Outstanding work.</div>';
+    return;
+  }
+  const seen = new Set();
+  const rows = state.mistakes.filter(q => {
+    if (seen.has(q.id)) return false;
+    seen.add(q.id);
+    return true;
+  });
+
+  el.innerHTML = rows.map(q => `
+    <div style="padding:18px 0;border-bottom:1px solid var(--border)">
+      <div class="qmeta">
+        <span class="pill">${esc(q.subject)}</span>
+        <span class="pill pink">${esc(q.topic)}</span>
+      </div>
+      <b style="font-size:15px">${esc(q.prompt)}</b>
+      <p style="margin:8px 0 4px;color:var(--red);font-size:13px">Your answer: ${esc(q.choices?.[q.selected] ?? '')}</p>
+      <p style="margin:0 0 10px;color:var(--cyan);font-size:13px">Correct answer: ${esc(q.choices?.[q.answer] ?? '')}</p>
+      <p style="color:var(--muted);font-size:13px;margin:0 0 12px">${esc(q.explanation)}</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn small" onclick="askParthFor('${q.id}')">✧ Ask Parth AI</button>
+        <button class="btn small primary" onclick="watchTopicVideo('${esc(q.topic)}')">▶ Watch Lecture</button>
+        <button class="btn small danger" onclick="removeMistake('${q.id}')">Dismiss</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function reviewMistakes() {
+  if (!state.mistakes.length) { toast('No mistakes to review yet.'); return; }
+  session = {
+    mode: 'practice',
+    exam: state.exam,
+    questions: state.mistakes.slice(0, 15),
+    index: 0,
+    answers: {},
+    started: Date.now()
+  };
+  navigate('practice');
+  renderQuestion();
+}
+
+function removeMistake(id) {
+  state.mistakes = state.mistakes.filter(q => q.id !== id);
+  save();
+  renderMistakes();
+}
+
+function renderAnalytics() {
+  const a = state.attempts;
+  const acc = accuracy(a);
+  document.getElementById('anaAnswered').textContent = a.length;
+  document.getElementById('anaCorrect').textContent = a.filter(x => x.correct).length;
+  document.getElementById('anaAccuracy').textContent = acc === null ? '—' : acc + '%';
+  document.getElementById('anaTime').textContent = state.timeSpent + 'm';
+
+  document.getElementById('subjectAnalytics').innerHTML = ['Math', 'Reading', 'Data'].map(s => {
+    const r = a.filter(x => x.subject === s);
+    const p = accuracy(r);
+    return `
+      <div style="margin:14px 0">
+        <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+          <b>${s}</b>
+          <span style="font-weight:700;color:var(--cyan)">${p === null ? '—' : p + '%'}</span>
+        </div>
+        <div class="progress"><span style="width:${p || 0}%"></span></div>
+        <div class="smalltext" style="color:var(--muted)">${r.length} questions attempted</div>
+      </div>`;
+  }).join('');
+
+  const topics = {};
+  a.forEach(x => {
+    topics[x.topic] ??= { n: 0, c: 0 };
+    topics[x.topic].n++;
+    if (x.correct) topics[x.topic].c++;
+  });
+  const weak = Object.entries(topics).filter(x => x[1].n >= 2).sort((a, b) => (a[1].c / a[1].n) - (b[1].c / b[1].n)).slice(0, 5);
+
+  document.getElementById('weakAreas').innerHTML = weak.length ? weak.map(([k, v]) => `
+    <div style="padding:10px 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center">
+      <div>
+        <b>${esc(k)}</b>
+        <div class="smalltext" style="color:var(--muted)">${Math.round(v.c / v.n * 100)}% accuracy (${v.n} attempts)</div>
+      </div>
+      <button class="btn small" onclick="watchTopicVideo('${esc(k)}')">▶ Watch Video</button>
+    </div>
+  `).join('') : '<div style="color:var(--muted);padding:20px 0">Solve more problems to calculate domain focus areas.</div>';
+
+  document.getElementById('attemptHistory').innerHTML = a.length ? `
+    <table>
+      <thead><tr><th>Date</th><th>Subject</th><th>Topic</th><th>Result</th></tr></thead>
+      <tbody>
+        ${a.slice(-25).reverse().map(x => `
+          <tr>
+            <td>${esc(new Date(x.date).toLocaleDateString())}</td>
+            <td>${esc(x.subject)}</td>
+            <td>${esc(x.topic)}</td>
+            <td><span class="pill ${x.correct ? 'green' : 'pink'}">${x.correct ? 'Correct' : 'Incorrect'}</span></td>
+          </tr>
+        `).join('')}
+      </tbody>
+    </table>` : '<div style="text-align:center;padding:20px;color:var(--muted)">No logged attempts.</div>';
+}
+
+/* -------------------------------------------------------------
+   PLANNER & TASKS
+------------------------------------------------------------- */
+document.getElementById('taskForm').addEventListener('submit', e => {
+  e.preventDefault();
+  state.tasks.push({
+    id: Date.now().toString(36),
+    title: document.getElementById('taskTitle').value.trim(),
+    date: document.getElementById('taskDate').value,
+    minutes: Number(document.getElementById('taskMinutes').value),
+    done: false
+  });
+  save();
+  e.target.reset();
+  document.getElementById('taskMinutes').value = 30;
+  renderPlanner();
+  toast('Task scheduled.');
+});
+
+function renderPlanner() {
+  const el = document.getElementById('taskList');
+  const tasks = state.tasks.slice().sort((a, b) => a.date.localeCompare(b.date));
+  el.innerHTML = tasks.length ? tasks.map(t => `
+    <div style="display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--border)">
+      <input type="checkbox" ${t.done ? 'checked' : ''} onchange="toggleTask('${t.id}', this.checked)">
+      <div style="flex:1">
+        <b style="${t.done ? 'text-decoration:line-through;color:var(--muted)' : ''}">${esc(t.title)}</b>
+        <div class="smalltext" style="color:var(--muted)">${esc(t.date)} · ${t.minutes} mins</div>
+      </div>
+      <button class="btn small danger" onclick="deleteTask('${t.id}')">Delete</button>
+    </div>
+  `).join('') : '<div style="color:var(--muted);padding:18px 0">No upcoming tasks scheduled.</div>';
+
+  document.getElementById('weeklyGoal').value = state.goal;
+  const done = tasks.filter(t => t.done).reduce((n, t) => n + t.minutes, 0);
+  const pct = Math.min(100, Math.round(done / (state.goal || 300) * 100));
+  document.getElementById('goalProgress').style.width = pct + '%';
+  document.getElementById('goalText').textContent = `${done} minutes finished out of ${state.goal} weekly target minutes (${pct}%).`;
+}
+
+function toggleTask(id, v) {
+  const t = state.tasks.find(x => x.id === id);
+  if (t) t.done = v;
+  if (v) markActivity();
+  save();
+  renderPlanner();
+  renderDashboard();
+}
+
+function deleteTask(id) {
+  state.tasks = state.tasks.filter(x => x.id !== id);
+  save();
+  renderPlanner();
+}
+
+function saveGoal() {
+  state.goal = Math.max(30, Number(document.getElementById('weeklyGoal').value) || 300);
+  save();
+  renderPlanner();
+  toast('Goal updated.');
+}
+
+/* -------------------------------------------------------------
+   SETTINGS & DATA MANAGEMENT
+------------------------------------------------------------- */
+function renderSettings() {
+  document.getElementById('profileName').value = state.profile.name || '';
+  document.getElementById('targetDate').value = state.profile.targetDate || '';
+}
+
+document.getElementById('profileForm').addEventListener('submit', e => {
+  e.preventDefault();
+  state.profile.name = document.getElementById('profileName').value.trim();
+  state.profile.targetDate = document.getElementById('targetDate').value;
+  save();
+  renderDashboard();
+  toast('Profile saved.');
+});
+
+function exportData() {
+  const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'northstar-backup.json';
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+function resetData() {
+  if (!confirm('Permanently clear all saved questions, mistakes, and history?')) return;
+  stopTimer();
+  localStorage.removeItem(KEY);
+  state = clone(baseState);
+  session = null;
+  save();
+  navigate('dashboard');
+  toast('State reset completed.');
+}
+
+/* -------------------------------------------------------------
+   PARTH AI (PUTER.JS POWERED TUTOR)
+------------------------------------------------------------- */
+function askParthFor(id) {
+  const q = (session?.questions || []).find(x => x.id === id) || state.mistakes.find(x => x.id === id);
+  if (!q) return;
+  navigate('parth');
+  quickAsk(`Explain this question simply. State the direct answer first, then provide 2–3 short steps of key reasoning:\nQuestion: ${q.prompt}\nCorrect Answer: ${q.choices[q.answer]}\nContext Explanation: ${q.explanation}`);
+}
+
+function explainCurrent() {
+  if (!currentQuestion) {
+    quickAsk(`Teach me one high-yield strategy for the ${state.exam}.`);
+    return;
+  }
+  askParthFor(currentQuestion.id);
+}
+
+function quickAsk(t) {
+  document.getElementById('chatInput').value = t;
+  document.getElementById('chatInput').focus();
+}
+
+function addBubble(role, text) {
+  const box = document.getElementById('chatMessages');
+  const b = document.createElement('div');
+  b.className = 'bubble ' + role;
+  b.textContent = text;
+  box.appendChild(b);
+  box.scrollTop = box.scrollHeight;
+  return b;
+}
+
+const chatHistory = [];
+const PARTH_SYSTEM = `You are Parth, an elite SAT/ACT tutor. Teach directly and clearly. Rules: 1) Answer first in 1 sentence. 2) Provide 2 to 4 short, crisp solution steps. 3) Use plain text formatting for math (e.g. 5x + 3 = 18), avoid complicated LaTeX delimiters. 4) Do not conclude with filler or repeated summaries. Target exam: ${state.exam}.`;
+
+document.getElementById('chatForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const input = document.getElementById('chatInput');
+  const send = document.getElementById('chatSend');
+  const msg = input.value.trim();
+  if (!msg) return;
+
+  input.value = '';
+  addBubble('user', msg);
+  chatHistory.push({ role: 'user', content: msg });
+
+  send.disabled = true;
+  send.textContent = 'Thinking…';
+  document.getElementById('aiStatus').textContent = 'Generating explanation…';
+  const pending = addBubble('assistant', 'Analyzing…');
+
+  try {
+    if (!window.puter?.ai?.chat) throw new Error('Puter AI not available. Please verify internet connection.');
+    const messages = [{ role: 'system', content: PARTH_SYSTEM }, ...chatHistory.slice(-8)];
+    const response = await puter.ai.chat(messages, { model: 'gpt-4o-mini' });
+    let answer = typeof response === 'string' ? response : (response?.message?.content || response?.text || '');
+    if (!answer) answer = 'No response generated. Please refine your query.';
+    pending.textContent = answer;
+    chatHistory.push({ role: 'assistant', content: answer });
+    document.getElementById('aiStatus').textContent = 'Response ready · Puter AI';
+  } catch(err) {
+    pending.textContent = 'Could not fetch AI tutor response. ' + (err?.message || err);
+    document.getElementById('aiStatus').textContent = 'Connection offline';
+  } finally {
+    send.disabled = false;
+    send.textContent = 'Send ↑';
+  }
+});
+
+// Initialization
+renderDashboard();
+renderVideos();
+renderTests();
+renderMistakes();
+renderAnalytics();
+renderPlanner();
+renderSettings();
+document.getElementById('examSelect').value = state.exam;
+document.getElementById('taskDate').value = today();
+</script>
+</body>
+</html>
